@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "ranking": {
+      "title": "Ranking",
+      "description": "Leaderboard entry for standard/challenge mode",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Player nickname, max 8 characters"
+        },
+        "score": {
+          "type": "integer",
+          "description": "Final score calculated from 3 rounds"
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["normal", "hard", "hell"],
+          "description": "Game difficulty mode"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the score was submitted"
+        }
+      },
+      "required": ["name", "score", "mode", "createdAt"]
+    },
+    "room": {
+      "title": "Room",
+      "description": "Online multiplayer match room",
+      "type": "object",
+      "properties": {
+        "roomId": { "type": "string" },
+        "hostId": { "type": "string" },
+        "hostName": { "type": "string" },
+        "maxPlayers": { "type": "integer" },
+        "roundsToWin": { "type": "integer" },
+        "difficulty": { "type": "string" },
+        "password": { "type": "string" },
+        "status": { "type": "string" },
+        "players": { "type": "array" },
+        "currentRound": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "samplingStartAt": { "type": "integer" },
+        "countdownStartAt": { "type": "integer" },
+        "currentProblem": { "type": "object" },
+        "answerState": { "type": "object" }
+      },
+      "required": ["roomId", "hostId", "hostName", "maxPlayers", "roundsToWin", "difficulty", "password", "status", "players", "currentRound", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/rankings/{rankingId}": {
+      "schema": {
+        "$ref": "#/entities/ranking"
+      },
+      "description": " leaderboard records for top players"
+    },
+    "/rooms/{roomId}": {
+      "schema": {
+        "$ref": "#/entities/room"
+      },
+      "description": "Online battle multiplayer match rooms"
+    }
+  }
+}

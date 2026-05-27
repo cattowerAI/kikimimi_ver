@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper Functions
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    
+    function incoming() { 
+      return request.resource.data; 
+    }
+    
+    // Schema Validation
+    function isValidRanking(data) {
+      return data.keys().hasAll(['name', 'score', 'mode', 'createdAt'])
+        && data.keys().size() == 4
+        && data.name is string 
+        && data.name.size() >= 1 
+        && data.name.size() <= 8
+        && data.score is int 
+        && data.score >= 0 
+        && data.score <= 30000
+        && data.mode is string 
+        && (data.mode == 'normal' || data.mode == 'hard' || data.mode == 'hell')
+        && data.createdAt == request.time;
+    }
+
+    match /rankings/{rankingId} {
+      allow create: if isValidId(rankingId) && isValidRanking(incoming());
+      allow list, get: if true;
+      allow update, delete: if false; // Immutable leaderboard
+    }
+
+    match /rooms/{roomId} {
+      allow read, write: if true;
+    }
+  }
+}

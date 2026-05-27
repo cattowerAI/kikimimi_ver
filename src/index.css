@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;900&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Zen Kaku Gothic New", "M PLUS Rounded 1c", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply antialiased text-slate-900;
+  background-color: #f7f7f7;
+}
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke: 1.5px black;
+  }
+}

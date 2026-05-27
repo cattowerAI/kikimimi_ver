@@ -1,0 +1,8 @@
+{
+  "name": "6 チャレンジ実装",
+  "description": "3人の声が同時に聞こえるカオスな状況から、ターゲットキャラの言葉を聴き分ける聖徳太子体験パズルゲーム。30秒以内に正解を組み立てろ！",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
